@@ -423,7 +423,7 @@ rule tencent_2019 : packer
     $lib_2 = /libshell(a|x)-[0-9.]+\.so/
 
   condition:
-    is_apk and ($lib_0 or $lib_1 or $lib_2)
+    is_apk and all of them
 }
 
 rule ijiami : packer
