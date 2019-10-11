@@ -226,7 +226,6 @@ rule cryptoshell_dex : packer
     not apkguard_dex
 }
 
-
 rule jar_pack01 : packer
 {
   meta:
@@ -361,4 +360,37 @@ rule tencent : packer
     is_dex
     and 2 of ($libshell_*)
     or 1 of ($class_*)
+}
+
+rule apkshield : packer
+{
+  meta:
+    description = "ApkShield"
+    author      = "Matteo Favaro"
+    sample      = "5582DBF43324831AD145781AE793B34B035250C615AE5A6EC01DCE9080BFD7BE"
+
+  strings:
+    $as01 = "APKSHIELD_ACTIVATE_NOTI_CHECK_SIG"
+    $as02 = "APKSHIELD_APP_TERMINATE_CHECK_SIG"
+    $as03 = "APKSHIELD_ENCRYPTED_LIB_FILES"
+    $as04 = "APKSHIELD_FORCHECKSIGNKEYSIGNATURE"
+    $as05 = "APKSHIELD_FORDOINGENCRYPTCLASS"
+    $as06 = "APKSHIELD_FORDOINGENCRYPTRES"
+    $as07 = "APKSHIELD_IS_ROOTING_CHECK_ENABLED"
+    $as08 = "APKSHIELD_IS_ROOTING_NOTIFICATION"
+    $as09 = "APKSHIELD_IS_ROOTING_TERMINATE"
+    $as10 = "APKSHIELD_IS_USB_DEBUG_CHECK_ENABLED"
+    $as11 = "APKSHIELD_NOTIFICATION_ICON_ID"
+    $as12 = "APKSHIELD_NOTIFICATION_TITLE"
+    $as13 = "APKSHIELD_NOT_PUREAPP_ONLY"
+    $as14 = "APKSHIELD_PACKAGEPATH"
+    $as15 = "APKSHIELD_PROGRESS_VALUE"
+    $as16 = "APKSHIELD_SERVICE_LIST"
+    $as17 = "APKSHIELD_SOURCEAPPLICATION"
+    $as18 = "APKSHIELD_USELOCALSHIELD"
+    $as19 = "APKSHIELD_USE_CLASS_LOADER_LIB"
+    $as20 = "APKSHIELD_WHITE_CLASS"
+
+  condition:
+    is_dex and 10 of them
 }

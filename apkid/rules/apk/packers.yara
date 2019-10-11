@@ -59,6 +59,24 @@ rule appguard_new : packer
     is_apk and 3 of them
 }
 
+rule appguard_generic : packer
+{
+  meta:
+    description = "AppGuard Generic"
+    author      = "Matteo Favaro"
+    sample      = "ACFDC90F9DB86F6BAF08F430B1E144A94F54532F6CE57BDE42E349239B627A47"
+    url         = "http://appguard.nprotect.com/en/index.html"
+
+  strings:
+    $a = "assets/AppGuard0.jar"
+    $b = "assets/AppGuard.dgc"
+    $c = "libAppGuard.so"
+    $d = "libAppGuard-x86.so"
+
+  condition:
+    is_apk and 2 of them
+}
+
 rule dxshield : packer
 {
   meta:
@@ -361,6 +379,21 @@ rule nqshield : packer
     is_apk and any of ($lib, $lib_sec1, $lib_sec2)
 }
 
+rule apkshield : packer
+{
+  meta:
+    description = "ApkShield"
+    author      = "Matteo Favaro"
+    sample      = "5582DBF43324831AD145781AE793B34B035250C615AE5A6EC01DCE9080BFD7BE"
+
+  strings:
+    $lib = /libahope_[a-z]\.so/
+    $dummy = "assets/dummy.zip"
+
+  condition:
+    is_apk and ($lib and $dummy)
+}
+
 rule tencent : packer
 {
   meta:
@@ -375,6 +408,22 @@ rule tencent : packer
 
   condition:
     is_apk and ($decryptor_lib or $zip_lib or $mix_dex)
+}
+
+rule tencent_2019 : packer
+{
+  meta:
+    description = "Mobile Tencent Protect (2019)"
+    author      = "Matteo Favaro"
+    sample      = "5b54dc4ab98aa1461cc2abc7b74c4b00f2916e92cbd641ec741fa9cbf6ef4bea"
+
+  strings:
+    $lib_0 = /(.flag)*[olO01]{12}(.dex|.jar|.dat)*/
+    $lib_1 = /libshell(a|x)?-super\.2019\.so/
+    $lib_2 = /libshell(a|x)-[0-9.]+\.so/
+
+  condition:
+    is_apk and ($lib_0 or $lib_1 or $lib_2)
 }
 
 rule ijiami : packer
@@ -603,4 +652,36 @@ rule secenh : packer
     is_apk
     and 1 of ($a*)
     and 1 of ($b*)
+}
+
+rule duoshield : packer
+{
+  meta:
+    description = "DuoShield"
+    author      = "Matteo Favaro"
+    sample      = "B2D2AE049F486396B160859F8661BB3744C227C8BF5441EF3ED9FF89DAA4A197"
+
+  strings:
+    $ds_1 = "assets/dx/duoshield.cfg"
+    $ds_2 = "assets/dx/duoshield.jar"
+    $ds_3 = "libds.so"
+
+  condition:
+    is_apk and all of them
+}
+
+rule dexshell : packer
+{
+  meta:
+    description = "DexShell"
+    author      = "Matteo Favaro"
+    sample      = "d8ad5b9f86f5956240b5ab5043245d8a37d8b79b02a5a2302500f57fea033de3"
+
+  strings:
+    $ds_1 = "assets/classes.jar"
+    $ds_2 = "assets/dexshell.jar"
+    $ds_3 = "libdexshell.so"
+
+  condition:
+    is_apk and all of them
 }
