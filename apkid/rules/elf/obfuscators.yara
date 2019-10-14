@@ -296,3 +296,16 @@ rule dexguard_native : obfuscator
       is_elf
       and any of them
 }
+
+rule byteguard : obfuscator
+{
+  meta:
+    description = "ByteGuard"
+
+  strings:
+    $a = "Apple LLVM version 6.0.0 (ByteGuard 0.9.3-af515063)"
+    $c =  "(ByteGuard 0"
+
+  condition:
+    is_elf and any of them
+}
