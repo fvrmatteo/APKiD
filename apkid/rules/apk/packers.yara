@@ -683,5 +683,5 @@ rule dexshell : packer
     $ds_3 = "libdexshell.so"
 
   condition:
-    is_apk and all of them
+    is_apk and 2 of them
 }
